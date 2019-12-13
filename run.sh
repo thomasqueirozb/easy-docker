@@ -2,8 +2,8 @@
 
 . ./config.sh
 
-xhost +
-
+# X11
+# xhost +
 
 # # Pulseaudio
 # if ! ( [ -f /tmp/pulseaudio.socket ] ); then
@@ -34,15 +34,18 @@ if [ -z "$docker_images" ]; then
 fi
 
 echo Starting container...
-echo $ARG
+
 docker run -ti --rm \
     -v ~/.bashrc:/home/docker/.bashrc \
     -v ~/.bash/:/home/docker/.bash/ \
     -v ~/.inputrc/:/home/docker/.inputrc/ \
     -v /etc/inputrc:/etc/inputrc \
     -w /home/docker \
-    --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \ # Enable ptrace
+    --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
     $IMAGE_NAME "/bin/bash"
+
+# Enable ptrace
+    # --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
 
 # Shared folder
     # -v "$(pwd)"/shared:/home/docker/shared \
