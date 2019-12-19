@@ -1,5 +1,5 @@
 #!/bin/sh
-
+_aux_folder="./aux"
 . ./config.sh
 
 # X11
@@ -7,7 +7,7 @@
 
 # # Pulseaudio
 # if ! ( [ -f /tmp/pulseaudio.socket ] ); then
-#     cp pulseaudio.client.conf /tmp/pulseaudio.client.conf
+#     cp "$_aux_folder"/files/pulseaudio.client.conf /tmp/pulseaudio.client.conf
 #     pactl load-module module-native-protocol-unix socket=/tmp/pulseaudio.socket
 # fi
 
@@ -23,7 +23,7 @@ if [ -z "$docker_images" ]; then
     echo "Docker image not found"
     echo "Building image..."
     echo
-    if sh build.sh; then
+    if sh "$_aux_folder"/build.sh; then
         echo "Build successful!"
         echo "Starting container..."
     else

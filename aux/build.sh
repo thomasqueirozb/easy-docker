@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. ./config.sh
+. ../config.sh
 
 _UID=$(id -u)
 _GID=$(id -g)
