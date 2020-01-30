@@ -2,6 +2,27 @@
 _aux_folder="./aux"
 . ./config.sh
 
+build() {
+    cd "$_aux_folder"
+    if sh ./build.sh; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+build_wrapper() {
+    cd -
+    if build; then
+        echo "Build successful!"
+        echo "Starting container..."
+    else
+        echo "An error ocurred during the build"
+        echo "Try running ./build.sh again"
+        exit 3
+    fi
+}
+
 # X11
 # xhost +
 
@@ -23,14 +44,10 @@ if [ -z "$docker_images" ]; then
     echo "Docker image not found"
     echo "Building image..."
     echo
-    if sh "$_aux_folder"/build.sh; then
-        echo "Build successful!"
-        echo "Starting container..."
-    else
-        echo "An error ocurred during the build"
-        echo "Try running ./build.sh again"
-        exit 3
-    fi
+    build_wrapper
+elif [ "$1" = "--rebuild" ]; then
+    echo "Rebuilding image"
+    build_wrapper
 fi
 
 echo Starting container...
