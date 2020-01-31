@@ -12,7 +12,6 @@ build() {
 }
 
 build_wrapper() {
-    cd -
     if build; then
         echo "Build successful!"
         echo "Starting container..."
